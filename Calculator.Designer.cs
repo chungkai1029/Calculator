@@ -41,7 +41,7 @@
             buttonPlus = new Button();
             buttonMinus = new Button();
             buttonDivide = new Button();
-            buttonMutiple = new Button();
+            buttonMultiple = new Button();
             buttonEqual = new Button();
             buttonDecimal = new Button();
             buttonInverse = new Button();
@@ -182,14 +182,14 @@
             buttonDivide.Text = "÷";
             buttonDivide.UseVisualStyleBackColor = true;
             // 
-            // buttonMutiple
+            // buttonMultiple
             // 
-            buttonMutiple.Location = new Point(390, 220);
-            buttonMutiple.Name = "buttonMutiple";
-            buttonMutiple.Size = new Size(130, 60);
-            buttonMutiple.TabIndex = 13;
-            buttonMutiple.Text = "x";
-            buttonMutiple.UseVisualStyleBackColor = true;
+            buttonMultiple.Location = new Point(390, 220);
+            buttonMultiple.Name = "buttonMultiple";
+            buttonMultiple.Size = new Size(130, 60);
+            buttonMultiple.TabIndex = 13;
+            buttonMultiple.Text = "x";
+            buttonMultiple.UseVisualStyleBackColor = true;
             // 
             // buttonEqual
             // 
@@ -233,7 +233,7 @@
             buttonSquare.Name = "buttonSquare";
             buttonSquare.Size = new Size(130, 60);
             buttonSquare.TabIndex = 18;
-            buttonSquare.Text = "x2";
+            buttonSquare.Text = "x²";
             buttonSquare.UseVisualStyleBackColor = true;
             // 
             // buttonRoot
@@ -305,7 +305,7 @@
             Controls.Add(buttonInverse);
             Controls.Add(buttonDecimal);
             Controls.Add(buttonEqual);
-            Controls.Add(buttonMutiple);
+            Controls.Add(buttonMultiple);
             Controls.Add(buttonDivide);
             Controls.Add(buttonMinus);
             Controls.Add(buttonPlus);
@@ -341,7 +341,7 @@
         private Button buttonPlus;
         private Button buttonMinus;
         private Button buttonDivide;
-        private Button buttonMutiple;
+        private Button buttonMultiple;
         private Button buttonEqual;
         private Button buttonDecimal;
         private Button buttonInverse;
