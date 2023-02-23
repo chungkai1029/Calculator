@@ -52,7 +52,7 @@
             buttonCE = new Button();
             buttonClear = new Button();
             buttonBackSpace = new Button();
-            richTextBox1 = new RichTextBox();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
             // button1
@@ -271,6 +271,7 @@
             buttonClear.TabIndex = 22;
             buttonClear.Text = "C";
             buttonClear.UseVisualStyleBackColor = true;
+            buttonClear.Click += buttonClear_Click;
             // 
             // buttonBackSpace
             // 
@@ -281,20 +282,21 @@
             buttonBackSpace.Text = "←";
             buttonBackSpace.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // textBox1
             // 
-            richTextBox1.Location = new Point(0, 0);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.RightToLeft = RightToLeft.Yes;
-            richTextBox1.Size = new Size(520, 100);
-            richTextBox1.TabIndex = 24;
-            richTextBox1.Text = "";
+            textBox1.Location = new Point(0, 0);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(520, 100);
+            textBox1.TabIndex = 24;
+            textBox1.Text = "0";
+            textBox1.TextAlign = HorizontalAlignment.Right;
             // 
             // Calculator
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(519, 461);
-            Controls.Add(richTextBox1);
+            Controls.Add(textBox1);
             Controls.Add(buttonBackSpace);
             Controls.Add(buttonClear);
             Controls.Add(buttonCE);
@@ -324,6 +326,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Calculator";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -352,6 +355,6 @@
         private Button buttonCE;
         private Button buttonClear;
         private Button buttonBackSpace;
-        private RichTextBox richTextBox1;
+        private TextBox textBox1;
     }
 }
