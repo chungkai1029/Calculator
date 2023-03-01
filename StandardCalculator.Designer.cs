@@ -163,6 +163,7 @@
             buttonPlus.TabIndex = 10;
             buttonPlus.Text = "+";
             buttonPlus.UseVisualStyleBackColor = true;
+            buttonPlus.Click += buttonPlus_Click;
             // 
             // buttonMinus
             // 
@@ -172,6 +173,7 @@
             buttonMinus.TabIndex = 11;
             buttonMinus.Text = "-";
             buttonMinus.UseVisualStyleBackColor = true;
+            buttonMinus.Click += buttonMinus_Click;
             // 
             // buttonDivide
             // 
@@ -181,6 +183,7 @@
             buttonDivide.TabIndex = 12;
             buttonDivide.Text = "÷";
             buttonDivide.UseVisualStyleBackColor = true;
+            buttonDivide.Click += buttonDivide_Click;
             // 
             // buttonMultiple
             // 
@@ -188,8 +191,9 @@
             buttonMultiple.Name = "buttonMultiple";
             buttonMultiple.Size = new Size(130, 60);
             buttonMultiple.TabIndex = 13;
-            buttonMultiple.Text = "x";
+            buttonMultiple.Text = "×";
             buttonMultiple.UseVisualStyleBackColor = true;
+            buttonMultiple.Click += buttonMultiple_Click;
             // 
             // buttonEqual
             // 
@@ -199,6 +203,7 @@
             buttonEqual.TabIndex = 14;
             buttonEqual.Text = "=";
             buttonEqual.UseVisualStyleBackColor = true;
+            buttonEqual.Click += buttonEqual_Click;
             // 
             // buttonDecimal
             // 
@@ -208,6 +213,7 @@
             buttonDecimal.TabIndex = 15;
             buttonDecimal.Text = ".";
             buttonDecimal.UseVisualStyleBackColor = true;
+            buttonDecimal.Click += buttonDecimal_Click;
             // 
             // buttonInverse
             // 
@@ -217,6 +223,7 @@
             buttonInverse.TabIndex = 16;
             buttonInverse.Text = "+/-";
             buttonInverse.UseVisualStyleBackColor = true;
+            buttonInverse.Click += buttonInverse_Click;
             // 
             // buttonFraction
             // 
