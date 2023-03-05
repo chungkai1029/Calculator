@@ -12,13 +12,13 @@ namespace Calculator
         #region Number
         private void CheckTextBox(string txt)
         {
-            if (textBox1.Text == "0")
+            if (ScreenBox.Text == "0")
             {
-                textBox1.Text = txt;
+                ScreenBox.Text = txt;
             }
             else
             {
-                textBox1.Text += txt;
+                ScreenBox.Text += txt;
             }
         }
 
@@ -71,10 +71,40 @@ namespace Calculator
         {
             CheckTextBox(button9.Text);
         }
+        #endregion
 
+        #region Clear
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "0";
+            ScreenBox.Text = "0";
+        }
+
+        private void buttonCE_Click(object sender, EventArgs e)
+        {
+            // Split the string of textbox with new line character(in Windows).
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
+
+            // Replace the text of second line to "0".
+            ScreenBox.Text = ScreenBox.Text.Replace(splitNewLine[splitNewLine.Length - 1], "0");
+        }
+
+        private void buttonBackSpace_Click(object sender, EventArgs e)
+        {
+            // Split the string of textbox with new line character(in Windows).
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
+
+            // And find the last string in the text box.
+            string lastString = splitNewLine[splitNewLine.Length - 1];
+
+            // Substring the last character to replace the last string.
+            if (lastString.Length <= 1)
+            {
+                ScreenBox.Text = ScreenBox.Text.Replace(lastString, "0");
+            }
+            else
+            {
+                ScreenBox.Text = ScreenBox.Text.Replace(lastString, lastString.Substring(0, lastString.Length - 1));
+            }
         }
         #endregion
 
@@ -85,10 +115,10 @@ namespace Calculator
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Check if operator match the text in textBox1 and the last charactor is "="
-            if (findOperator.IsMatch(textBox1.Text) && splitNewLine[0].LastIndexOf("=") == -1)
+            if (findOperator.IsMatch(ScreenBox.Text) && splitNewLine[0].LastIndexOf("=") == -1)
             {
                 // Find the match operator in first line.
                 Match match = findOperator.Match(splitNewLine[0]);
@@ -98,20 +128,20 @@ namespace Calculator
                 switch (match.ToString())
                 {
                     case "+":
-                        textBox1.Text = textBox1.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 + num2);
+                        ScreenBox.Text = ScreenBox.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 + num2);
                         break;
                     case "-":
-                        textBox1.Text = textBox1.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 - num2);
+                        ScreenBox.Text = ScreenBox.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 - num2);
                         break;
                     case "กั":
-                        textBox1.Text = textBox1.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 * num2);
+                        ScreenBox.Text = ScreenBox.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 * num2);
                         break;
                     case "กา":
-                        textBox1.Text = textBox1.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 / num2);
+                        ScreenBox.Text = ScreenBox.Text.Replace("\r\n", "") + buttonEqual.Text + "\r\n" + Convert.ToString(num1 / num2);
                         break;
                 }
             }
-            else if (findOperator.IsMatch(textBox1.Text))
+            else if (findOperator.IsMatch(ScreenBox.Text))
             {
                 // Find the match words in first line and get the fitst match operator.
                 MatchCollection matches = findOperator.Matches(splitNewLine[0]);
@@ -120,7 +150,7 @@ namespace Calculator
                 // If the first match word is "=" then keep text on textbox.
                 if (firstMatch.ToString() == "=")
                 {
-                    textBox1.Text = splitNewLine[0] + "\r\n" + splitNewLine[1];
+                    ScreenBox.Text = splitNewLine[0] + "\r\n" + splitNewLine[1];
                     return;
                 }
 
@@ -132,22 +162,22 @@ namespace Calculator
                 switch (firstMatch.ToString())
                 {
                     case "+":
-                        textBox1.Text = $"{num1}+{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 + num2);
+                        ScreenBox.Text = $"{num1}+{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 + num2);
                         break;
                     case "-":
-                        textBox1.Text = $"{num1}-{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 - num2);
+                        ScreenBox.Text = $"{num1}-{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 - num2);
                         break;
                     case "กั":
-                        textBox1.Text = $"{num1}กั{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 * num2);
+                        ScreenBox.Text = $"{num1}กั{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 * num2);
                         break;
                     case "กา":
-                        textBox1.Text = $"{num1}กา{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 / num2);
+                        ScreenBox.Text = $"{num1}กา{num2}" + buttonEqual.Text + "\r\n" + Convert.ToString(num1 / num2);
                         break;
                 }
             }
             else
             {
-                textBox1.Text += buttonEqual.Text + "\r\n" + textBox1.Text;
+                ScreenBox.Text += buttonEqual.Text + "\r\n" + ScreenBox.Text;
             }
         }
 
@@ -157,10 +187,10 @@ namespace Calculator
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Check if operator match the Text in textBox1 and the last charactor is "="
-            if (findOperator.IsMatch(textBox1.Text) && splitNewLine[0].LastIndexOf("=") == -1)
+            if (findOperator.IsMatch(ScreenBox.Text) && splitNewLine[0].LastIndexOf("=") == -1)
             {
                 // Find the match operator in first line.
                 Match match = findOperator.Match(splitNewLine[0]);
@@ -170,26 +200,26 @@ namespace Calculator
                 switch (match.ToString())
                 {
                     case "+":
-                        textBox1.Text = Convert.ToString(num1 + num2) + buttonPlus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 + num2) + buttonPlus.Text + "\r\n";
                         break;
                     case "-":
-                        textBox1.Text = Convert.ToString(num1 - num2) + buttonPlus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 - num2) + buttonPlus.Text + "\r\n";
                         break;
                     case "กั":
-                        textBox1.Text = Convert.ToString(num1 * num2) + buttonPlus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 * num2) + buttonPlus.Text + "\r\n";
                         break;
                     case "กา":
-                        textBox1.Text = Convert.ToString(num1 / num2) + buttonPlus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 / num2) + buttonPlus.Text + "\r\n";
                         break;
                 }
             }
-            else if (findOperator.IsMatch(textBox1.Text))
+            else if (findOperator.IsMatch(ScreenBox.Text))
             {
-                textBox1.Text = splitNewLine[1] + buttonPlus.Text + "\r\n" + splitNewLine[1];
+                ScreenBox.Text = splitNewLine[1] + buttonPlus.Text + "\r\n" + splitNewLine[1];
             }
             else
             {
-                textBox1.Text += buttonPlus.Text + "\r\n";
+                ScreenBox.Text += buttonPlus.Text + "\r\n";
             }
         }
 
@@ -199,10 +229,10 @@ namespace Calculator
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Check if operator match the Text in textBox1 and the last charactor is "="
-            if (findOperator.IsMatch(textBox1.Text) && splitNewLine[0].LastIndexOf("=") == -1)
+            if (findOperator.IsMatch(ScreenBox.Text) && splitNewLine[0].LastIndexOf("=") == -1)
             {
                 // Find the match operator in first line.
                 Match match = findOperator.Match(splitNewLine[0]);
@@ -212,26 +242,26 @@ namespace Calculator
                 switch (match.ToString())
                 {
                     case "+":
-                        textBox1.Text = Convert.ToString(num1 + num2) + buttonMinus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 + num2) + buttonMinus.Text + "\r\n";
                         break;
                     case "-":
-                        textBox1.Text = Convert.ToString(num1 - num2) + buttonMinus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 - num2) + buttonMinus.Text + "\r\n";
                         break;
                     case "กั":
-                        textBox1.Text = Convert.ToString(num1 * num2) + buttonMinus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 * num2) + buttonMinus.Text + "\r\n";
                         break;
                     case "กา":
-                        textBox1.Text = Convert.ToString(num1 / num2) + buttonMinus.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 / num2) + buttonMinus.Text + "\r\n";
                         break;
                 }
             }
-            else if (findOperator.IsMatch(textBox1.Text))
+            else if (findOperator.IsMatch(ScreenBox.Text))
             {
-                textBox1.Text = splitNewLine[1] + buttonMinus.Text + "\r\n" + splitNewLine[1];
+                ScreenBox.Text = splitNewLine[1] + buttonMinus.Text + "\r\n" + splitNewLine[1];
             }
             else
             {
-                textBox1.Text += buttonMinus.Text + "\r\n";
+                ScreenBox.Text += buttonMinus.Text + "\r\n";
             }
         }
 
@@ -241,10 +271,10 @@ namespace Calculator
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Check if operator match the Text in textBox1 and the last charactor is "="
-            if (findOperator.IsMatch(textBox1.Text) && splitNewLine[0].LastIndexOf("=") == -1)
+            if (findOperator.IsMatch(ScreenBox.Text) && splitNewLine[0].LastIndexOf("=") == -1)
             {
                 // Find the match operator in first line.
                 Match match = findOperator.Match(splitNewLine[0]);
@@ -254,26 +284,26 @@ namespace Calculator
                 switch (match.ToString())
                 {
                     case "+":
-                        textBox1.Text = Convert.ToString(num1 + num2) + buttonMultiple.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 + num2) + buttonMultiple.Text + "\r\n";
                         break;
                     case "-":
-                        textBox1.Text = Convert.ToString(num1 - num2) + buttonMultiple.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 - num2) + buttonMultiple.Text + "\r\n";
                         break;
                     case "กั":
-                        textBox1.Text = Convert.ToString(num1 * num2) + buttonMultiple.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 * num2) + buttonMultiple.Text + "\r\n";
                         break;
                     case "กา":
-                        textBox1.Text = Convert.ToString(num1 / num2) + buttonMultiple.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 / num2) + buttonMultiple.Text + "\r\n";
                         break;
                 }
             }
-            else if (findOperator.IsMatch(textBox1.Text))
+            else if (findOperator.IsMatch(ScreenBox.Text))
             {
-                textBox1.Text = splitNewLine[1] + buttonMultiple.Text + "\r\n" + splitNewLine[1];
+                ScreenBox.Text = splitNewLine[1] + buttonMultiple.Text + "\r\n" + splitNewLine[1];
             }
             else
             {
-                textBox1.Text += buttonMultiple.Text + "\r\n";
+                ScreenBox.Text += buttonMultiple.Text + "\r\n";
             }
         }
 
@@ -283,10 +313,10 @@ namespace Calculator
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Check if operator match the Text in textBox1 and the last charactor is "="
-            if (findOperator.IsMatch(textBox1.Text) && splitNewLine[0].LastIndexOf("=") == -1)
+            if (findOperator.IsMatch(ScreenBox.Text) && splitNewLine[0].LastIndexOf("=") == -1)
             {
                 // Find the match operator in first line.
                 Match match = findOperator.Match(splitNewLine[0]);
@@ -296,26 +326,26 @@ namespace Calculator
                 switch (match.ToString())
                 {
                     case "+":
-                        textBox1.Text = Convert.ToString(num1 + num2) + buttonDivide.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 + num2) + buttonDivide.Text + "\r\n";
                         break;
                     case "-":
-                        textBox1.Text = Convert.ToString(num1 - num2) + buttonDivide.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 - num2) + buttonDivide.Text + "\r\n";
                         break;
                     case "กั":
-                        textBox1.Text = Convert.ToString(num1 * num2) + buttonDivide.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 * num2) + buttonDivide.Text + "\r\n";
                         break;
                     case "กา":
-                        textBox1.Text = Convert.ToString(num1 / num2) + buttonDivide.Text + "\r\n";
+                        ScreenBox.Text = Convert.ToString(num1 / num2) + buttonDivide.Text + "\r\n";
                         break;
                 }
             }
-            else if (findOperator.IsMatch(textBox1.Text))
+            else if (findOperator.IsMatch(ScreenBox.Text))
             {
-                textBox1.Text = splitNewLine[1] + buttonDivide.Text + "\r\n" + splitNewLine[1];
+                ScreenBox.Text = splitNewLine[1] + buttonDivide.Text + "\r\n" + splitNewLine[1];
             }
             else
             {
-                textBox1.Text += buttonDivide.Text + "\r\n";
+                ScreenBox.Text += buttonDivide.Text + "\r\n";
             }
         }
         #endregion
@@ -326,7 +356,7 @@ namespace Calculator
             Regex findDecimal = new Regex("\\.");
 
             // Split the string of textbox with new line character(in Windows).
-            string[] splitNewLine = textBox1.Text.Split("\r\n");
+            string[] splitNewLine = ScreenBox.Text.Split("\r\n");
 
             // Find if the string of textbox match or not.
             if (findDecimal.IsMatch(splitNewLine[splitNewLine.Length - 1]))
@@ -335,8 +365,28 @@ namespace Calculator
             }
             else
             {
-                textBox1.Text += ".";
+                ScreenBox.Text += ".";
             }
+        }
+
+        private void buttonFraction_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSquare_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRoot_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPercent_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonInverse_Click(object sender, EventArgs e)

@@ -52,7 +52,7 @@
             buttonCE = new Button();
             buttonClear = new Button();
             buttonBackSpace = new Button();
-            textBox1 = new TextBox();
+            ScreenBox = new TextBox();
             SuspendLayout();
             // 
             // button1
@@ -233,6 +233,7 @@
             buttonFraction.TabIndex = 17;
             buttonFraction.Text = "1/x";
             buttonFraction.UseVisualStyleBackColor = true;
+            buttonFraction.Click += buttonFraction_Click;
             // 
             // buttonSquare
             // 
@@ -242,6 +243,7 @@
             buttonSquare.TabIndex = 18;
             buttonSquare.Text = "x²";
             buttonSquare.UseVisualStyleBackColor = true;
+            buttonSquare.Click += buttonSquare_Click;
             // 
             // buttonRoot
             // 
@@ -251,6 +253,7 @@
             buttonRoot.TabIndex = 19;
             buttonRoot.Text = "√";
             buttonRoot.UseVisualStyleBackColor = true;
+            buttonRoot.Click += buttonRoot_Click;
             // 
             // buttonPercent
             // 
@@ -260,6 +263,7 @@
             buttonPercent.TabIndex = 20;
             buttonPercent.Text = "%";
             buttonPercent.UseVisualStyleBackColor = true;
+            buttonPercent.Click += buttonPercent_Click;
             // 
             // buttonCE
             // 
@@ -269,6 +273,7 @@
             buttonCE.TabIndex = 21;
             buttonCE.Text = "CE";
             buttonCE.UseVisualStyleBackColor = true;
+            buttonCE.Click += buttonCE_Click;
             // 
             // buttonClear
             // 
@@ -288,22 +293,23 @@
             buttonBackSpace.TabIndex = 23;
             buttonBackSpace.Text = "←";
             buttonBackSpace.UseVisualStyleBackColor = true;
+            buttonBackSpace.Click += buttonBackSpace_Click;
             // 
-            // textBox1
+            // ScreenBox
             // 
-            textBox1.Location = new Point(0, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(520, 100);
-            textBox1.TabIndex = 24;
-            textBox1.Text = "0";
-            textBox1.TextAlign = HorizontalAlignment.Right;
+            ScreenBox.Location = new Point(0, 0);
+            ScreenBox.Multiline = true;
+            ScreenBox.Name = "ScreenBox";
+            ScreenBox.Size = new Size(520, 100);
+            ScreenBox.TabIndex = 24;
+            ScreenBox.Text = "0";
+            ScreenBox.TextAlign = HorizontalAlignment.Right;
             // 
             // Calculator
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(519, 461);
-            Controls.Add(textBox1);
+            Controls.Add(ScreenBox);
             Controls.Add(buttonBackSpace);
             Controls.Add(buttonClear);
             Controls.Add(buttonCE);
@@ -362,6 +368,6 @@
         private Button buttonCE;
         private Button buttonClear;
         private Button buttonBackSpace;
-        private TextBox textBox1;
+        private TextBox ScreenBox;
     }
 }
