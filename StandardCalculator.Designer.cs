@@ -52,7 +52,8 @@
             buttonCE = new Button();
             buttonClear = new Button();
             buttonBackSpace = new Button();
-            ScreenBox = new TextBox();
+            UpperScreen = new TextBox();
+            LowerScreen = new TextBox();
             SuspendLayout();
             // 
             // button1
@@ -295,21 +296,36 @@
             buttonBackSpace.UseVisualStyleBackColor = true;
             buttonBackSpace.Click += buttonBackSpace_Click;
             // 
-            // ScreenBox
+            // UpperScreen
             // 
-            ScreenBox.Location = new Point(0, 0);
-            ScreenBox.Multiline = true;
-            ScreenBox.Name = "ScreenBox";
-            ScreenBox.Size = new Size(520, 100);
-            ScreenBox.TabIndex = 24;
-            ScreenBox.Text = "0";
-            ScreenBox.TextAlign = HorizontalAlignment.Right;
+            UpperScreen.BackColor = SystemColors.Control;
+            UpperScreen.BorderStyle = BorderStyle.None;
+            UpperScreen.Font = new Font("Times New Roman", 22F, FontStyle.Regular, GraphicsUnit.Point);
+            UpperScreen.Location = new Point(0, 0);
+            UpperScreen.Name = "UpperScreen";
+            UpperScreen.Size = new Size(515, 34);
+            UpperScreen.TabIndex = 24;
+            UpperScreen.TextAlign = HorizontalAlignment.Right;
+            // 
+            // LowerScreen
+            // 
+            LowerScreen.BackColor = SystemColors.Control;
+            LowerScreen.BorderStyle = BorderStyle.None;
+            LowerScreen.Font = new Font("Times New Roman", 42F, FontStyle.Regular, GraphicsUnit.Point);
+            LowerScreen.Location = new Point(0, 34);
+            LowerScreen.MaxLength = 16;
+            LowerScreen.Name = "LowerScreen";
+            LowerScreen.Size = new Size(515, 65);
+            LowerScreen.TabIndex = 25;
+            LowerScreen.Text = "0";
+            LowerScreen.TextAlign = HorizontalAlignment.Right;
             // 
             // Calculator
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(519, 461);
-            Controls.Add(ScreenBox);
+            Controls.Add(LowerScreen);
+            Controls.Add(UpperScreen);
             Controls.Add(buttonBackSpace);
             Controls.Add(buttonClear);
             Controls.Add(buttonCE);
@@ -368,6 +384,7 @@
         private Button buttonCE;
         private Button buttonClear;
         private Button buttonBackSpace;
-        private TextBox ScreenBox;
+        private TextBox UpperScreen;
+        private TextBox LowerScreen;
     }
 }
