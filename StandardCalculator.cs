@@ -2,12 +2,12 @@ using System.Text.RegularExpressions;
 
 namespace Calculator
 {
-    public partial class Calculator : Form
+    public partial class StandardCalculator : Form
     {
         // A bool flag to check if the text of Lower Screen could be replaced.
         bool isFisrtWord = false;
 
-        public Calculator()
+        public StandardCalculator()
         {
             InitializeComponent();
         }
@@ -157,7 +157,7 @@ namespace Calculator
             {
                 // Find the match operators in the text of UpperScreen and get the first match operator.
                 MatchCollection matches = findOperator.Matches(upperText);
-                Match firstMatch = matches[0];
+                Match firstMatch = matches.First();
 
                 // If the first match word is "=" then keep the text of UpperScreen and LowerScreen.
                 if (firstMatch.ToString() == "=")
@@ -412,9 +412,26 @@ namespace Calculator
             // Check if operator match the text of UpperScreen and the last charactor is "=".
             if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
             {
+                // Find the match operators in the text of UpperScreen and get the last match operator.
+                MatchCollection matches = findOperator.Matches(upperText);
+                Match firstMatch = matches.First();
 
+                // Split first line with operator (exclude equal) to get the second number.
+                string[] splitOperator = upperText.Split(firstMatch.ToString());
+                string number = splitOperator[1];
+
+                if (number == "")
+                {
+                    UpperScreen.Text += $"1/({lowerText})";
+                    LowerScreen.Text = Convert.ToString(1 / Convert.ToDouble(lowerText));
+                }
+                else
+                {
+                    UpperScreen.Text = upperText.Replace(number, $"1/({number})");
+                    LowerScreen.Text = Convert.ToString(1 / Convert.ToDouble(lowerText));
+                }
             }
-            else if(!findOperator.IsMatch(upperText) && upperText.Length > 0)
+            else if (!findOperator.IsMatch(upperText) && upperText.Length > 0)
             {
                 UpperScreen.Text = $"1/({upperText})";
                 LowerScreen.Text = Convert.ToString(1 / Convert.ToDouble(lowerText));
@@ -438,7 +455,24 @@ namespace Calculator
             // Check if operator match the text of UpperScreen and the last charactor is "=".
             if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
             {
+                // Find the match operators in the text of UpperScreen and get the last match operator.
+                MatchCollection matches = findOperator.Matches(upperText);
+                Match firstMatch = matches.First();
 
+                // Split first line with operator (exclude equal) to get the second number.
+                string[] splitOperator = upperText.Split(firstMatch.ToString());
+                string number = splitOperator[1];
+
+                if (number == "")
+                {
+                    UpperScreen.Text += $"sqr({lowerText})";
+                    LowerScreen.Text = Convert.ToString(Math.Pow(Convert.ToDouble(lowerText), 2));
+                }
+                else
+                {
+                    UpperScreen.Text = upperText.Replace(number, $"sqr({number})");
+                    LowerScreen.Text = Convert.ToString(Math.Pow(Convert.ToDouble(lowerText), 2));
+                }
             }
             else if (!findOperator.IsMatch(upperText) && upperText.Length > 0)
             {
@@ -466,9 +500,28 @@ namespace Calculator
             {
                 // Find the match operators in the text of UpperScreen and get the last match operator.
                 MatchCollection matches = findOperator.Matches(upperText);
-                Match lastMatch = matches[matches.Count - 1];
+                Match firstMatch = matches.First();
+                Match lastMatch = matches.Last();
 
-                UpperScreen.Text = $"{lastMatch}";
+                if (lastMatch.ToString() == buttonRoot.Text && firstMatch.ToString() == lastMatch.ToString())
+                {
+                    UpperScreen.Text = $"{buttonRoot.Text}({upperText})";
+                    LowerScreen.Text = Convert.ToString(Math.Sqrt(Convert.ToDouble(lowerText)));
+                }
+                else if (lastMatch.ToString() == buttonRoot.Text && firstMatch.ToString() != lastMatch.ToString())
+                {
+                    // Split first line with operator (exclude equal) to get the second number.
+                    string[] splitOperator = upperText.Split(firstMatch.ToString());
+                    string number = splitOperator[1];
+
+                    UpperScreen.Text = upperText.Replace(number.ToString(), $"{buttonRoot.Text}({number})");
+                    LowerScreen.Text = Convert.ToString(Math.Sqrt(Convert.ToDouble(lowerText)));
+                }
+                else
+                {
+                    UpperScreen.Text += $"{buttonRoot.Text}({lowerText})";
+                    LowerScreen.Text = Convert.ToString(Math.Sqrt(Convert.ToDouble(lowerText)));
+                }
             }
             else if (!findOperator.IsMatch(upperText) && upperText.Length > 0)
             {
@@ -484,12 +537,55 @@ namespace Calculator
 
         private void buttonPercent_Click(object sender, EventArgs e)
         {
+            // Define a regular expression for found operator.
+            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
+            // Get the text of UpperScreen and LowerScreen.
+            string upperText = UpperScreen.Text;
+            string lowerText = LowerScreen.Text;
+
+            if (upperText == "" || upperText == "0")
+            {
+                UpperScreen.Text = "0";
+                LowerScreen.Text = "0";
+            }
+            else if(findOperator.IsMatch(upperText))
+            {
+                // Find the match operators in the text of UpperScreen and get the last match operator.
+                MatchCollection matches = findOperator.Matches(upperText);
+                Match match = matches.First();
+
+                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
+                double num2 = Convert.ToDouble(lowerText);
+
+                switch (match.ToString())
+                {
+                    case "+":
+                        UpperScreen.Text = upperText + Convert.ToString(num1 * num2 / 100);
+                        LowerScreen.Text = Convert.ToString(num1 * num2 / 100);
+                        break;
+                    case "-":
+                        UpperScreen.Text = upperText + Convert.ToString(num1 * num2 / 100);
+                        LowerScreen.Text = Convert.ToString(num1 * num2 / 100);
+                        break;
+                    case "กั":
+                        UpperScreen.Text = upperText + Convert.ToString(num2 / 100);
+                        LowerScreen.Text = Convert.ToString(num2 / 100);
+                        break;
+                    case "กา":
+                        UpperScreen.Text = upperText + Convert.ToString(num2 / 100);
+                        LowerScreen.Text = Convert.ToString(num2 / 100);
+                        break;
+                }
+            }
         }
 
         private void buttonInverse_Click(object sender, EventArgs e)
         {
+            // Get the text of UpperScreen and LowerScreen.
+            string lowerText = LowerScreen.Text;
 
+            LowerScreen.Text = Convert.ToString(0 - Convert.ToDouble(lowerText));
         }
     }
 }
