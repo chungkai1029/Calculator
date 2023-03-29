@@ -115,9 +115,6 @@ namespace Calculator
         #region Operator
         private void buttonEqual_Click(object sender, EventArgs e)
         {
-            // Change the bool flag to mark the text of LowerScreen could be replaced.
-            isFisrtWord = true;
-
             // Define a regular expression for found operator.
             Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
 
@@ -194,190 +191,79 @@ namespace Calculator
             {
                 UpperScreen.Text = lowerText + buttonEqual.Text;
             }
+
+            // Then change the bool flag to mark the text of LowerScreen could be replaced.
+            isFisrtWord = true;
+        }
+
+        private void OperatorExceptEqual(string txt)
+        {
+            // Define a regular expression for found operator.
+            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
+
+            // Get the text of UpperScreen and LowerScreen.
+            string upperText = UpperScreen.Text;
+            string lowerText = LowerScreen.Text;
+
+            // Check if the bool flag is true or false.
+            if (isFisrtWord == true && upperText.LastIndexOf("=") == -1)
+            {
+                UpperScreen.Text = upperText.Substring(0, upperText.Length - 1) + txt;
+            }
+            else if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)   // Check if operator match the text of UpperScreen and the last charactor is "=".
+            {
+                // Find the match operator in the text of UpperScreen.
+                Match match = findOperator.Match(upperText);
+                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
+                double num2 = Convert.ToDouble(lowerText);
+
+                switch (match.ToString())
+                {
+                    case "+":
+                        UpperScreen.Text = Convert.ToString(num1 + num2) + txt;
+                        LowerScreen.Text = Convert.ToString(num1 + num2);
+                        break;
+                    case "-":
+                        UpperScreen.Text = Convert.ToString(num1 - num2) + txt;
+                        LowerScreen.Text = Convert.ToString(num1 - num2);
+                        break;
+                    case "กั":
+                        UpperScreen.Text = Convert.ToString(num1 * num2) + txt;
+                        LowerScreen.Text = Convert.ToString(num1 * num2);
+                        break;
+                    case "กา":
+                        UpperScreen.Text = Convert.ToString(num1 / num2) + txt;
+                        LowerScreen.Text = Convert.ToString(num1 / num2);
+                        break;
+                }
+            }
+            else
+            {
+                UpperScreen.Text = lowerText + txt;
+            }
+
+            // Tehn change the bool flag to mark the text of LowerScreen could be replaced.
+            isFisrtWord = true;
         }
 
         private void buttonPlus_Click(object sender, EventArgs e)
         {
-            // Change the bool flag to mark the text of LowerScreen could be replaced.
-            isFisrtWord = true;
-
-            // Define a regular expression for found operator.
-            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
-
-            // Get the text of UpperScreen and LowerScreen.
-            string upperText = UpperScreen.Text;
-            string lowerText = LowerScreen.Text;
-
-            // Check if operator match the text of UpperScreen and the last charactor is "=".
-            if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
-            {
-                // Find the match operator in the text of UpperScreen.
-                Match match = findOperator.Match(upperText);
-                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
-                double num2 = Convert.ToDouble(lowerText);
-
-                switch (match.ToString())
-                {
-                    case "+":
-                        UpperScreen.Text = Convert.ToString(num1 + num2) + buttonPlus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 + num2);
-                        break;
-                    case "-":
-                        UpperScreen.Text = Convert.ToString(num1 - num2) + buttonPlus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 - num2);
-                        break;
-                    case "กั":
-                        UpperScreen.Text = Convert.ToString(num1 * num2) + buttonPlus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 * num2);
-                        break;
-                    case "กา":
-                        UpperScreen.Text = Convert.ToString(num1 / num2) + buttonPlus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 / num2);
-                        break;
-                }
-            }
-            else
-            {
-                UpperScreen.Text = lowerText + buttonPlus.Text;
-            }
+            OperatorExceptEqual(buttonPlus.Text);
         }
 
         private void buttonMinus_Click(object sender, EventArgs e)
         {
-            // Change the bool flag to mark the text of LowerScreen could be replaced.
-            isFisrtWord = true;
-
-            // Define a regular expression for found operator.
-            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
-
-            // Get the text of UpperScreen and LowerScreen.
-            string upperText = UpperScreen.Text;
-            string lowerText = LowerScreen.Text;
-
-            // Check if operator match the text of UpperScreen and the last charactor is "=".
-            if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
-            {
-                // Find the match operator in the text of UpperScreen.
-                Match match = findOperator.Match(upperText);
-                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
-                double num2 = Convert.ToDouble(lowerText);
-
-                switch (match.ToString())
-                {
-                    case "+":
-                        UpperScreen.Text = Convert.ToString(num1 + num2) + buttonMinus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 + num2);
-                        break;
-                    case "-":
-                        UpperScreen.Text = Convert.ToString(num1 - num2) + buttonMinus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 - num2);
-                        break;
-                    case "กั":
-                        UpperScreen.Text = Convert.ToString(num1 * num2) + buttonMinus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 * num2);
-                        break;
-                    case "กา":
-                        UpperScreen.Text = Convert.ToString(num1 / num2) + buttonMinus.Text;
-                        LowerScreen.Text = Convert.ToString(num1 / num2);
-                        break;
-                }
-            }
-            else
-            {
-                UpperScreen.Text = lowerText + buttonMinus.Text;
-            }
+            OperatorExceptEqual(buttonMinus.Text);
         }
 
         private void buttonMultiple_Click(object sender, EventArgs e)
         {
-            // Change the bool flag to mark the text of LowerScreen could be replaced.
-            isFisrtWord = true;
-
-            // Define a regular expression for found operator.
-            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
-
-            // Get the text of UpperScreen and LowerScreen.
-            string upperText = UpperScreen.Text;
-            string lowerText = LowerScreen.Text;
-
-            // Check if operator match the text of UpperScreen and the last charactor is "=".
-            if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
-            {
-                // Find the match operator in the text of UpperScreen.
-                Match match = findOperator.Match(upperText);
-                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
-                double num2 = Convert.ToDouble(lowerText);
-
-                switch (match.ToString())
-                {
-                    case "+":
-                        UpperScreen.Text = Convert.ToString(num1 + num2) + buttonMultiple.Text;
-                        LowerScreen.Text = Convert.ToString(num1 + num2);
-                        break;
-                    case "-":
-                        UpperScreen.Text = Convert.ToString(num1 - num2) + buttonMultiple.Text;
-                        LowerScreen.Text = Convert.ToString(num1 - num2);
-                        break;
-                    case "กั":
-                        UpperScreen.Text = Convert.ToString(num1 * num2) + buttonMultiple.Text;
-                        LowerScreen.Text = Convert.ToString(num1 * num2);
-                        break;
-                    case "กา":
-                        UpperScreen.Text = Convert.ToString(num1 / num2) + buttonMultiple.Text;
-                        LowerScreen.Text = Convert.ToString(num1 / num2);
-                        break;
-                }
-            }
-            else
-            {
-                UpperScreen.Text = lowerText + buttonMultiple.Text;
-            }
+            OperatorExceptEqual(buttonMultiple.Text);
         }
 
         private void buttonDivide_Click(object sender, EventArgs e)
         {
-            // Change the bool flag to mark the text of LowerScreen could be replaced.
-            isFisrtWord = true;
-
-            // Define a regular expression for found operator.
-            Regex findOperator = new Regex(@"[\p{Sm}\p{Pd}]");
-
-            // Get the text of UpperScreen and LowerScreen.
-            string upperText = UpperScreen.Text;
-            string lowerText = LowerScreen.Text;
-
-            // Check if operator match the text of UpperScreen and the last charactor is "=".
-            if (findOperator.IsMatch(upperText) && upperText.LastIndexOf("=") == -1)
-            {
-                // Find the match operator in the text of UpperScreen.
-                Match match = findOperator.Match(upperText);
-                double num1 = Convert.ToDouble(upperText.Replace(match.ToString(), ""));
-                double num2 = Convert.ToDouble(lowerText);
-
-                switch (match.ToString())
-                {
-                    case "+":
-                        UpperScreen.Text = Convert.ToString(num1 + num2) + buttonDivide.Text;
-                        LowerScreen.Text = Convert.ToString(num1 + num2);
-                        break;
-                    case "-":
-                        UpperScreen.Text = Convert.ToString(num1 - num2) + buttonDivide.Text;
-                        LowerScreen.Text = Convert.ToString(num1 - num2);
-                        break;
-                    case "กั":
-                        UpperScreen.Text = Convert.ToString(num1 * num2) + buttonDivide.Text;
-                        LowerScreen.Text = Convert.ToString(num1 * num2);
-                        break;
-                    case "กา":
-                        UpperScreen.Text = Convert.ToString(num1 / num2) + buttonDivide.Text;
-                        LowerScreen.Text = Convert.ToString(num1 / num2);
-                        break;
-                }
-            }
-            else
-            {
-                UpperScreen.Text = lowerText + buttonDivide.Text;
-            }
+            OperatorExceptEqual(buttonDivide.Text);
         }
         #endregion
 
@@ -393,6 +279,11 @@ namespace Calculator
             if (findDecimal.IsMatch(lowerText))
             {
                 return;
+            }
+            else if(isFisrtWord == true)
+            {
+                LowerScreen.Text = "0.";
+                isFisrtWord = false;    // Change the bool flag to mark the text of LowerScreen could not be replaced.
             }
             else
             {
@@ -441,6 +332,9 @@ namespace Calculator
                 UpperScreen.Text = $"1/({lowerText})";
                 LowerScreen.Text = Convert.ToString(1 / Convert.ToDouble(lowerText));
             }
+
+            // Change the bool flag to mark the text of LowerScreen could not be replaced.
+            isFisrtWord = false;
         }
 
         private void buttonSquare_Click(object sender, EventArgs e)
@@ -484,6 +378,9 @@ namespace Calculator
                 UpperScreen.Text = $"sqr({lowerText})";
                 LowerScreen.Text = Convert.ToString(Math.Pow(Convert.ToDouble(lowerText), 2));
             }
+
+            // Change the bool flag to mark the text of LowerScreen could not be replaced.
+            isFisrtWord = false;
         }
 
         private void buttonRoot_Click(object sender, EventArgs e)
@@ -533,6 +430,9 @@ namespace Calculator
                 UpperScreen.Text = $"{buttonRoot.Text}({lowerText})";
                 LowerScreen.Text = Convert.ToString(Math.Sqrt(Convert.ToDouble(lowerText)));
             }
+
+            // Change the bool flag to mark the text of LowerScreen could not be replaced.
+            isFisrtWord = false;
         }
 
         private void buttonPercent_Click(object sender, EventArgs e)
@@ -578,14 +478,21 @@ namespace Calculator
                         break;
                 }
             }
+
+            // Change th e bool flag to mark the text of LowerScreen could not be replaced.
+            isFisrtWord = false;
         }
 
         private void buttonInverse_Click(object sender, EventArgs e)
         {
             // Get the text of UpperScreen and LowerScreen.
+            string upperText = UpperScreen.Text;
             string lowerText = LowerScreen.Text;
 
             LowerScreen.Text = Convert.ToString(0 - Convert.ToDouble(lowerText));
+
+            // Change the bool flag to mark the text of LowerScreen could not be replaced.
+            isFisrtWord = false;
         }
     }
 }
